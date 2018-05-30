@@ -4,6 +4,7 @@ class ActsAsHoldableHoldings < ActiveRecord::Migration[5.2]
       t.references :holdable, polymorphic: true, index: { name: "index_acts_as_holdable_holdings_holdable" }
       t.references :holder, polymorphic: true, index: { name: "index_acts_as_holdable_holdings_holder" }
       t.column :amount, :integer
+      t.column :job_pid, :string
 
       t.timestamps
     end

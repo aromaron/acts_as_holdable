@@ -2,6 +2,8 @@
 
 require 'active_record'
 require 'acts_as_holdable/engine'
+require 'active_job'
+require 'sidekiq-status'
 
 module ActsAsHoldable
   extend ActiveSupport::Autoload

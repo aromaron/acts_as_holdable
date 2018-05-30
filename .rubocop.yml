@@ -14,6 +14,7 @@ AllCops:
     - 'bin/**/*'
     - 'test/**/*'
     - 'spec/**/*'
+    - 'lib/jobs/**'
 Metrics/AbcSize:
   Max: 18
 

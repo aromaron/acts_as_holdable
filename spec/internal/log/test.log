@@ -1546,3 +1546,533 @@
   [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
   [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:42:20.831340"], ["updated_at", "2018-05-30 22:42:20.831340"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (4.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:44:33.089214"], ["updated_at", "2018-05-30 22:44:33.089214"]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (2.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:45:22.963921"], ["updated_at", "2018-05-30 22:45:22.963921"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:45:44.962236"], ["updated_at", "2018-05-30 22:45:44.962236"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:46:23.525380"], ["updated_at", "2018-05-30 22:46:23.525380"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:46:53.716409"], ["updated_at", "2018-05-30 22:46:53.716409"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (2.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:47:18.753946"], ["updated_at", "2018-05-30 22:47:18.753946"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (2.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:47:47.655795"], ["updated_at", "2018-05-30 22:47:47.655795"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (3.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:48:00.077001"], ["updated_at", "2018-05-30 22:48:00.077001"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:49:04.537813"], ["updated_at", "2018-05-30 22:49:04.537813"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:49:25.354532"], ["updated_at", "2018-05-30 22:49:25.354532"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (2.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:52:46.612796"], ["updated_at", "2018-05-30 22:52:46.612796"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:52:46.653685"], ["updated_at", "2018-05-30 22:52:46.653685"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:52:46.681656"], ["updated_at", "2018-05-30 22:52:46.681656"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:53:27.497632"], ["updated_at", "2018-05-30 22:53:27.497632"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.5ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued UnholdJob (Job ID: 5c1b3e47-d73f-4708-8de7-ee7cf567efb6) to Test(default) at 2018-05-30 22:54:28 UTC with arguments: 9
+  [1m[35m (0.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "holdables"[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "holdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "on_hand" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "unholdables"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "unholdables" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "not_holders"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "not_holders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "generics"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "generics" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2018-05-30 22:53:35.073849"], ["updated_at", "2018-05-30 22:53:35.073849"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to ActsAsHoldableHoldings (20180530211641)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "acts_as_holdable_holdings"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "acts_as_holdable_holdings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "holdable_type" varchar, "holdable_id" integer, "holder_type" varchar, "holder_id" integer, "amount" integer, "job_pid" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holdable" ON "acts_as_holdable_holdings" ("holdable_type", "holdable_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_acts_as_holdable_holdings_holder" ON "acts_as_holdable_holdings" ("holder_type", "holder_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180530211641"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] Enqueued UnholdJob (Job ID: 0d75f406-1eba-49b4-a105-6eb06310813f) to Test(default) at 2018-05-30 22:54:35 UTC with arguments: 13
