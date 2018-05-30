@@ -15,7 +15,7 @@ module ActsAsHoldable
           unpermitted_params = {}
           required_params = {}
 
-          case self.holding_opts[:capacity_type]
+          case self.holding_opts[:on_hand_type]
           when :closed
             required_params[:amount] = [Integer]
           when :open

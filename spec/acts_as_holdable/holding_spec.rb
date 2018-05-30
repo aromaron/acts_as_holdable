@@ -4,7 +4,7 @@ describe 'Holding model' do
   before(:each) do
     @holding = ActsAsHoldable::Holding.new(amount: 2)
     @holder = Holder.create!(name: 'Holder')
-    @holdable = Holdable.create!(name: 'Holdable', capacity: 1)
+    @holdable = Holdable.create!(name: 'Holdable', on_hand: 1)
     @holding.holder = @holder
     @holding.holdable = @holdable
   end

@@ -15,8 +15,8 @@ describe 'Holder model' do
 
   describe 'has_many :holdings' do
     before(:each) do
-      holdable1 = Holdable.create(name: 'Holdable 1', capacity: 1)
-      holdable2 = Holdable.create(name: 'Holdable 2', capacity: 2)
+      holdable1 = Holdable.create(name: 'Holdable 1', on_hand: 1)
+      holdable2 = Holdable.create(name: 'Holdable 2', on_hand: 2)
       holding1 = ActsAsHoldable::Holding.create(holdable: holdable1, holder: @holder, amount: 1)
       holding2 = ActsAsHoldable::Holding.create(holdable: holdable2, holder: @holder, amount: 1)
       @holder.reload
@@ -36,7 +36,7 @@ describe 'Holder model' do
 
   describe '#hold!' do
     before(:each) do
-      @holdable = Holdable.create(name: 'Holdable', capacity: 1)
+      @holdable = Holdable.create(name: 'Holdable', on_hand: 1)
     end
 
     it 'should respond to #hold!' do

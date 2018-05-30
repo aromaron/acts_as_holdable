@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Holdable model' do
   before(:each) do
-    @holdable = Holdable.create!(name: 'Holdable', capacity: 1)
+    @holdable = Holdable.create!(name: 'Holdable', on_hand: 1)
   end
 
   describe 'validations' do
@@ -14,13 +14,13 @@ describe 'Holdable model' do
       expect(@holdable.save).to be_truthy
     end
 
-    it 'should not be valid with capacity < 0' do
-      @holdable.capacity = -1
+    it 'should not be valid with on_hand < 0' do
+      @holdable.on_hand = -1
       expect(@holdable.valid?).to be_falsy
     end
 
-    it 'should not be valid without a capacity' do
-      @holdable.capacity = nil
+    it 'should not be valid without a on_hand' do
+      @holdable.on_hand = nil
       expect(@holdable.valid?).to be_falsy
     end
   end
