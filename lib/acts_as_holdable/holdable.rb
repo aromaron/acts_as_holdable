@@ -11,13 +11,11 @@ module ActsAsHoldable
     private
 
     def holdable(options)
-      holding_opts = options
-
       if holdable?
-        self.holding_opts.merge!(holding_opts)
+        self.holding_opts = options
       else
         class_attribute :holding_opts
-        self.holding_opts = holding_opts
+        self.holding_opts = options
   
         class_eval do
           has_many :holdings, as: :holdable, dependent: :destroy, class_name: '::ActsAsHoldable::Holding'

@@ -5,20 +5,32 @@ describe 'Holdable model' do
     @holdable = Holdable.create!(name: 'Holdable', capacity: 1)
   end
 
-  it 'should be valid with all required fields set' do
-    expect(@holdable).to be_valid
-  end
+  describe 'validations' do
+    it 'should be valid with all required fields set' do
+      expect(@holdable).to be_valid
+    end
 
-  it 'should save a holdable' do
-    expect(@holdable.save).to be_truthy
+    it 'should save a holdable' do
+      expect(@holdable.save).to be_truthy
+    end
+
+    it 'should not be valid with capacity < 0' do
+      @holdable.capacity = -1
+      expect(@holdable.valid?).to be_falsy
+    end
+
+    it 'should not be valid without a capacity' do
+      @holdable.capacity = nil
+      expect(@holdable.valid?).to be_falsy
+    end
   end
 
   describe 'has_many :holdings' do
     before(:each) do
       holder1 = Holder.create(name: 'Holder 1')
       holder2 = Holder.create(name: 'Holder 2')
-      holding1 = ActsAsHoldable::Holding.create(holder: holder1, holdable: @holdable)
-      holding2 = ActsAsHoldable::Holding.create(holder: holder1, holdable: @holdable)
+      holding1 = ActsAsHoldable::Holding.create(holder: holder1, holdable: @holdable, amount: 1)
+      holding2 = ActsAsHoldable::Holding.create(holder: holder1, holdable: @holdable, amount: 2)
       @holdable.reload
     end
 

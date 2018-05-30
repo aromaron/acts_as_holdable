@@ -6,7 +6,9 @@ module ActsAsHoldable
 
     validates_presence_of :holdable
     validates_presence_of :holder
-    validate :holdable_is_holdable, :holder_is_holder
+    validate :holdable_is_holdable,
+             :holder_is_holder
+    validates :amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
     private
 

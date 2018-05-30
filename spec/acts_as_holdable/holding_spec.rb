@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Holding model' do
   before(:each) do
-    @holding = ActsAsHoldable::Holding.new
+    @holding = ActsAsHoldable::Holding.new(amount: 2)
     @holder = Holder.create!(name: 'Holder')
     @holdable = Holdable.create!(name: 'Holdable', capacity: 1)
     @holding.holder = @holder
@@ -24,7 +24,17 @@ describe 'Holding model' do
 
   it 'should not be valid without a holdable' do
     @holding.holdable = nil
-    expect(@holding).not_to be_valid
+    expect(@holding.valid?).to be_falsy
+  end
+
+  it 'should not be valid with amount < 0' do
+    @holding.amount = -1
+    expect(@holding.valid?).to be_falsy
+  end
+
+  it 'should not be valid without amount' do
+    @holding.amount = nil
+    expect(@holding.valid?).to be_falsy
   end
 
   it 'should not be valid if holding.holder.holder? is false' do

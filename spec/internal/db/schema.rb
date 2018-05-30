@@ -29,5 +29,6 @@ ActiveRecord::Schema.define do
     t.column :name, :string
     t.references :holdable, polymorphic: true
     t.references :holder, polymorphic: true
+    t.column :amount, :integer
   end
 end

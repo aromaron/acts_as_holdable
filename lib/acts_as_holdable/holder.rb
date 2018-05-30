@@ -21,18 +21,11 @@ module ActsAsHoldable
 
     module InstanceMethods
 
-      def hold!(holdable)
-        holding = ActsAsHoldable::Holding.create!(holder: self, holdable: holdable)
+      def hold!(holdable, opts={})
+        holdable.class.validate_holding_options!(opts) if holdable.class.holdable?
+        holding = ActsAsHoldable::Holding.create!(holder: self, holdable: holdable, amount: opts[:amount])
         holdable.reload
         holding
-      end
-
-      def hold(holdable)
-        begin
-          hold!(holdable)
-        rescue ActiveRecord::RecordInvalid => er
-          false
-        end
       end
 
       def holder?

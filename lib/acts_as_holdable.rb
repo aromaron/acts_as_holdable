@@ -12,8 +12,21 @@ module ActsAsHoldable
   autoload_under 'holdable' do
       autoload :Core
     end
-  
 
+  class InitializationError < StandardError
+    def initialize(model, message)
+      super "Error initializing acts_as_bookable on #{model.to_s} - " + message
+    end
+  end
+
+  class OptionsInvalid < StandardError
+    def initialize(model, message)
+      super "Error validating options for #{model.to_s} - " + message
+    end
+  end
+
+  class AvailabilityError < StandardError
+  end
 end
 
 ActiveSupport.on_load(:active_record) do
