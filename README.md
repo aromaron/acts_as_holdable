@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'acts_as_booked'
+gem 'acts_as_holdable'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ $ bundle
 
 Or install it yourself as:
 ```bash
-$ gem install acts_as_booked
+$ gem install acts_as_holdable
 ```
 
 ## Contributing
