@@ -1,0 +1,7 @@
+en:
+  acts_as_holdable:
+    errors:
+      messages:
+        holding:
+          must_be_holdable: "cannot hold a %{model} as it\'s not holdable"
+          must_be_holder: "a %{model} cannot hold a resource, because %{model} is not a holder"
