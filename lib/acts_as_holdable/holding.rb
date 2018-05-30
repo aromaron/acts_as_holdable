@@ -1,6 +1,8 @@
 module ActsAsHoldable
   # Holding model. Store in host database holdings made by holders on holdables
   class Holding < ::ActiveRecord::Base
+    self.table_name = 'acts_as_holdable_holdings'
+
     belongs_to :holdable, polymorphic: true
     belongs_to :holder, polymorphic: true
 
@@ -11,7 +13,6 @@ module ActsAsHoldable
              :holder_is_holder
 
     validates :amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
     private
 
     # Validation method. Check if the holded model is actually holdable

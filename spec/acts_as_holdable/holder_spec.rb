@@ -15,14 +15,14 @@ describe 'Holder model' do
 
   it 'new holding should have all fields set' do
     @holdable = Holdable.create(name: 'Holdable', on_hand: 4)
-    new_holding = @holder.hold!(@holdable, amount: 2)
+    new_holding = @holder.hold!(@holdable, amount: 1)
     expect(new_holding.amount).to be_present
   end
 
   describe 'has_many :holdings' do
     before(:each) do
-      holdable1 = Holdable.create(name: 'Holdable 1', on_hand: 1)
-      holdable2 = Holdable.create(name: 'Holdable 2', on_hand: 2)
+      holdable1 = Holdable.create(name: 'Holdable 1', on_hand: 4)
+      holdable2 = Holdable.create(name: 'Holdable 2', on_hand: 4)
       holding1 = ActsAsHoldable::Holding.create(holdable: holdable1, holder: @holder, amount: 1)
       holding2 = ActsAsHoldable::Holding.create(holdable: holdable2, holder: @holder, amount: 1)
       @holder.reload

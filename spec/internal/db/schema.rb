@@ -25,7 +25,7 @@ ActiveRecord::Schema.define do
     t.column :name, :string
   end
 
-  create_table :holdings, force: true do |t|
+  create_table :acts_as_holdable_holdings, force: true do |t|
     t.column :name, :string
     t.references :holdable, polymorphic: true
     t.references :holder, polymorphic: true

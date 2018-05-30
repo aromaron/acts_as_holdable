@@ -8,20 +8,21 @@ module ActsAsHoldable
   autoload :Holdable
   autoload :Holder
   autoload :Holding
+  autoload :DbUtils
 
   autoload_under 'holdable' do
       autoload :Core
-    end
+  end
 
   class InitializationError < StandardError
     def initialize(model, message)
-      super "Error initializing acts_as_bookable on #{model.to_s} - " + message
+      super "Error initializing acts_as_holdable on #{model} - " + message
     end
   end
 
   class OptionsInvalid < StandardError
     def initialize(model, message)
-      super "Error validating options for #{model.to_s} - " + message
+      super "Error validating options for #{model} - " + message
     end
   end
 
