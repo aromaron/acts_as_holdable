@@ -1,44 +1,44 @@
 require 'spec_helper'
 
 describe 'acts_as_holdable' do
-  it "should provide a class method 'bookable?' that is false for unbookable models" do
-    expect(Unbookable).not_to be_bookable
+  it "should provide a class method 'holdable?' that is false for unholdable models" do
+    expect(Unholdable).not_to be_holdable
   end
 
-  describe 'Bookable Method Generation' do
+  describe 'Holdable Method Generation' do
     before :each do
-      Unbookable.acts_as_holdable
-      @bookable = Unbookable.new
+      Unholdable.acts_as_holdable
+      @holdable = Unholdable.new
     end
 
-    it "should respond 'true' to bookable?" do
-      expect(@bookable.class).to be_bookable
+    it "should respond 'true' to holdable?" do
+      expect(@holdable.class).to be_holdable
     end
   end
 
-  describe 'class configured as Bookable' do
+  describe 'class configured as Holdable' do
     before(:each) do
-      @bookable = Bookable.new
+      @holdable = Holdable.new
     end
 
-    it 'should add #bookable? query method to the class-side' do
-      expect(Bookable).to respond_to(:bookable?)
+    it 'should add #holdable? query method to the class-side' do
+      expect(Holdable).to respond_to(:holdable?)
     end
 
-    it 'should return true from the class-side #bookable?' do
-      expect(Bookable.bookable?).to be_truthy
+    it 'should return true from the class-side #holdable?' do
+      expect(Holdable.holdable?).to be_truthy
     end
 
-    it 'should return false from the base #bookable?' do
-      expect(ActiveRecord::Base.bookable?).to be_falsy
+    it 'should return false from the base #holdable?' do
+      expect(ActiveRecord::Base.holdable?).to be_falsy
     end
   end
 
   describe 'Reloading' do
     it 'should save a model instantiated by Model.find' do
-      bookable = Bookable.create!(name: 'Bookable')
-      found_bookable = Bookable.find(bookable.id)
-      expect(found_bookable.save).to eq true
+      holdable = Holdable.create!(name: 'Holdable', capacity: 1)
+      found_holdable = Holdable.find(holdable.id)
+      expect(found_holdable.save).to eq true
     end
   end
 end

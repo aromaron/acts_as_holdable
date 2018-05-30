@@ -2,6 +2,6 @@ en:
   acts_as_holdable:
     errors:
       messages:
-        booking:
-          must_be_bookable: "cannot book a %{model} as it\'s not bookable"
-          must_be_booker: "a %{model} cannot book a resource, because %{model} is not a booker"
+        holding:
+          must_be_holdable: "cannot hold a %{model} as it\'s not holdable"
+          must_be_holder: "a %{model} cannot hold a resource, because %{model} is not a holder"

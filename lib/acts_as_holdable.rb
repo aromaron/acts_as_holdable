@@ -5,11 +5,11 @@ module ActsAsHoldable
   extend ActiveSupport::Autoload
 
   autoload :T
-  autoload :Bookable
-  autoload :Booker
-  autoload :Booking
+  autoload :Holdable
+  autoload :Holder
+  autoload :Holding
 
-  autoload_under 'bookable' do
+  autoload_under 'holdable' do
       autoload :Core
     end
   
@@ -17,6 +17,6 @@ module ActsAsHoldable
 end
 
 ActiveSupport.on_load(:active_record) do
-  extend ActsAsHoldable::Bookable
-  include ActsAsHoldable::Booker
+  extend ActsAsHoldable::Holdable
+  include ActsAsHoldable::Holder
 end

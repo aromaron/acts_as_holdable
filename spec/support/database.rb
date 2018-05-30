@@ -15,7 +15,7 @@ if File.exist?(database_yml)
   begin
     #activerecord 4 uses symbol
     #TODO, remove when activerecord 3 support is dropped
-    if ActsAsBookable::Utils.active_record4? || ActsAsBookable::Utils.active_record5?
+    if ActsAsHoldable::Utils.active_record4? || ActsAsHoldable::Utils.active_record5?
       ActiveRecord::Base.establish_connection(db_name.to_sym)
     else
       ActiveRecord::Base.establish_connection(db_name)

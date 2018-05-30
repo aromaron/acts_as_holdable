@@ -1,7 +1,8 @@
 module ActsAsHoldable
-  module Bookable
+  module Holdable
     module Core
       def self.included(base)
+
       end
     end
   end
