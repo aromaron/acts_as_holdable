@@ -69,4 +69,49 @@ describe 'Holder model' do
       expect(@holder.holdings.count).to eq count
     end
   end
+
+  describe '#unhold!' do
+    before(:each) do
+      @holdable = Holdable.create(name: 'Holdable', on_hand: 3)
+      @holding = @holder.hold!(@holdable, amount: 2)
+    end
+
+    it 'should respond to #unhold!' do
+      expect(@holder).to respond_to :unhold!
+    end
+
+    it 'should destroy a holding' do
+      count = @holder.holdings.count
+      @holder.unhold! @holding
+      expect(@holder.holdings.count).to eq count-1
+    end
+  end
+
+  describe '#hold_for', type: :job do
+    before(:each) do
+      @holdable = Holdable.create(name: 'Holdable', on_hand: 3)
+    end
+
+    it 'should respond to #hold_for' do
+      expect(@holder).to respond_to :hold_for
+    end
+
+    it 'should create a job to destroy a holding in a time frame' do
+      ActiveJob::Base.queue_adapter = :test
+      count = @holder.holdings.count
+      expect {
+        @holder.hold_for(@holdable, duration: 1.minutes, amount: 1)
+        }.to change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
+    end
+  end
+
+  describe '#confirm_holding!', type: :job do
+    before(:each) do
+      @holdable = Holdable.create(name: 'Holdable', on_hand: 3)
+    end
+
+    it 'should respond to #confirm_holding!' do
+      expect(@holder).to respond_to :confirm_holding!
+    end
+  end
 end

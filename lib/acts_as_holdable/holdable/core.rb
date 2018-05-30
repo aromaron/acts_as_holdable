@@ -69,7 +69,7 @@ module ActsAsHoldable
             if !permitted_options.key? key
               raise ActsAsHoldable::InitializationError.new(self, "#{key} is not a valid option")
             elsif !permitted_options[key].include? val
-              raise ActsAsHoldable::InitializationError.new(self, "#{val} is not a valid value for #{key}. Allowed values are: #{permitted_options[key]}")
+              raise ActsAsHoldable::InitializationError.new(self, "#{val} is not a valid value for #{key}. Allowed values: #{permitted_options[key]}")
             end
             # rubocop:enable Style/GuardClause
           end

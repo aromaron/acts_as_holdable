@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'jobs/unhold_job'
 module ActsAsHoldable
   module Holder
     def self.included(base)
@@ -30,6 +31,33 @@ module ActsAsHoldable
         holding = ActsAsHoldable::Holding.create!(holding_params)
 
         holdable.reload
+        holding
+      end
+
+      def unhold!(holding)
+        # deletes current holding
+        ActsAsHoldable::Holding.destroy(holding.id)
+        reload
+        true
+      end
+
+      def hold_for(holdable, opts = {})
+        # Clean params for Bookings
+        holding_opts = opts.except(:duration)
+
+        # Creates the Booking
+        holding = hold!(holdable, holding_opts)
+
+        # Sets a Job to delete the Booking
+        job = UnholdJob.set(wait: opts[:duration]).perform_later(holding.id)
+        holding.update(job_pid: job.provider_job_id)
+        holding
+      end
+
+      def confirm_holding!(holding)
+        return false unless holding.job_pid
+        Sidekiq::Status.unschedule(holding.job_pid)
+        holding.update(job_pid: nil)
         holding
       end
 
