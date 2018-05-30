@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_record'
 require 'acts_as_holdable/engine'
 
@@ -11,7 +13,7 @@ module ActsAsHoldable
   autoload :DbUtils
 
   autoload_under 'holdable' do
-      autoload :Core
+    autoload :Core
   end
 
   class InitializationError < StandardError

@@ -1,0 +1,27 @@
+Rails:
+  Enabled: true
+Documentation:
+  Enabled: false
+Metrics/LineLength:
+  Max: 150
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'test/**/*'
+    - 'spec/**/*'
+Metrics/AbcSize:
+  Max: 18
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+Lint/MissingCopEnableDirective:
+  Enabled: false
+Rails/LexicallyScopedActionFilter:
+  Enabled: false

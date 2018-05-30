@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActsAsHoldable
   # Holding model. Store in host database holdings made by holders on holdables
   class Holding < ::ActiveRecord::Base
