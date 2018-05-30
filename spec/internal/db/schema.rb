@@ -27,8 +27,8 @@ ActiveRecord::Schema.define do
 
   create_table :acts_as_holdable_holdings, force: true do |t|
     t.column :name, :string
-    t.references :holdable, polymorphic: true
-    t.references :holder, polymorphic: true
+    t.references :holdable, polymorphic: true, index: { name: "index_acts_as_holdable_holdings_holdable" }
+    t.references :holder, polymorphic: true, index: { name: "index_acts_as_holdable_holdings_holder" }
     t.column :amount, :integer
   end
 end

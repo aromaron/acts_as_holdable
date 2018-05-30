@@ -23,6 +23,12 @@ Or install it yourself as:
 $ gem install acts_as_holdable
 ```
 
+## Migrations
+
+```bash
+bundle exec rake acts_as_holdable_engine:install:migrations
+```
+
 ## Contributing
 Contribution directions go here.
 

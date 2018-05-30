@@ -20,15 +20,11 @@ module ActsAsHoldable
     end
 
     module InstanceMethods
-
       def hold!(holdable, opts={})
-        # validates options
-        holdable.class.validate_holding_options!(opts) if holdable.class.holdable?
-
         # validates availability
         holdable.check_availability!(opts) if holdable.class.holdable?
 
-        holding_params = opts.merge({ holder: self, holdable: holdable })
+        holding_params = opts.merge(holder: self, holdable: holdable)
         holding = ActsAsHoldable::Holding.create!(holding_params)
 
         holdable.reload

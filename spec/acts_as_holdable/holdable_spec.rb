@@ -16,7 +16,7 @@ describe 'Holdable model' do
 
     describe 'when on_hand is required' do
       before(:each) do
-        Holdable.holding_opts[:on_hand_type] = :closed
+        Holdable.holding_opts[:on_hand_type] = :open
         Holdable.initialize_acts_as_holdable_core
       end
 
@@ -29,7 +29,7 @@ describe 'Holdable model' do
         @holdable.on_hand = -1
         expect(@holdable.valid?).to be_falsy
       end
-  
+
       it 'should not be valid without a on_hand' do
         @holdable.on_hand = nil
         expect(@holdable.valid?).to be_falsy
@@ -47,9 +47,9 @@ describe 'Holdable model' do
         Holdable.initialize_acts_as_holdable_core
       end
 
-      it 'should not validate with on_hand < 0' do
+      it 'should be valid with on_hand < 0' do
         @holdable.on_hand = -1
-        expect(@holdable.valid?).to be_falsy
+        expect(@holdable.valid?).to be_truthy
       end
   
       it 'should validate without on_hand if it\'s not required' do

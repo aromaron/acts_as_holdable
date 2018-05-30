@@ -87,6 +87,9 @@ module ActsAsHoldable
 
       module InstanceMethods
         def check_availability!(opts)
+          # validates options
+          self.validate_holding_options!(opts)
+
           if self.holding_opts[:on_hand_type] != :none
             # Amount > on_hand
             if opts[:amount] > self.on_hand
@@ -109,7 +112,7 @@ module ActsAsHoldable
         end
 
         def validate_holding_options!(opts)
-          self.validate_holding_options!(opts)
+          self.class.validate_holding_options!(opts)
         end
 
         def holder?
