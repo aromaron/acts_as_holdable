@@ -5,7 +5,7 @@ describe 'Holdable model' do
     @holdable = Holdable.create!(name: 'Holdable', on_hand: 1)
   end
 
-  describe 'validations' do
+  describe 'conditional validations' do
     it 'should be valid with all required fields set' do
       expect(@holdable).to be_valid
     end
@@ -14,14 +14,48 @@ describe 'Holdable model' do
       expect(@holdable.save).to be_truthy
     end
 
-    it 'should not be valid with on_hand < 0' do
-      @holdable.on_hand = -1
-      expect(@holdable.valid?).to be_falsy
+    describe 'when on_hand is required' do
+      before(:each) do
+        Holdable.holding_opts[:on_hand_type] = :closed
+        Holdable.initialize_acts_as_holdable_core
+      end
+
+      after(:all) do
+        Holdable.holding_opts = {}
+        Holdable.initialize_acts_as_holdable_core
+      end
+
+      it 'should not be valid with on_hand < 0 if on_hand is required' do
+        @holdable.on_hand = -1
+        expect(@holdable.valid?).to be_falsy
+      end
+  
+      it 'should not be valid without a on_hand' do
+        @holdable.on_hand = nil
+        expect(@holdable.valid?).to be_falsy
+      end
     end
 
-    it 'should not be valid without a on_hand' do
-      @holdable.on_hand = nil
-      expect(@holdable.valid?).to be_falsy
+    describe 'when on_hand is not required' do
+      before(:each) do
+        Holdable.holding_opts[:on_hand_type] = :none
+        Holdable.initialize_acts_as_holdable_core
+      end
+
+      after(:all) do
+        Holdable.holding_opts = {}
+        Holdable.initialize_acts_as_holdable_core
+      end
+
+      it 'should not validate with on_hand < 0' do
+        @holdable.on_hand = -1
+        expect(@holdable.valid?).to be_falsy
+      end
+  
+      it 'should validate without on_hand if it\'s not required' do
+        @holdable.on_hand = nil
+        expect(@holdable.valid?).to be_truthy
+      end
     end
   end
 

@@ -13,6 +13,12 @@ describe 'Holder model' do
     expect(@holder.save).to be_truthy
   end
 
+  it 'new holding should have all fields set' do
+    @holdable = Holdable.create(name: 'Holdable', on_hand: 4)
+    new_holding = @holder.hold!(@holdable, amount: 2)
+    expect(new_holding.amount).to be_present
+  end
+
   describe 'has_many :holdings' do
     before(:each) do
       holdable1 = Holdable.create(name: 'Holdable 1', on_hand: 1)

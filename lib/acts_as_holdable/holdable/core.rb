@@ -3,6 +3,8 @@ module ActsAsHoldable
     module Core
       def self.included(base)
         base.extend ActsAsHoldable::Holdable::Core::ClassMethods
+        base.include ActsAsHoldable::Holdable::Core::InstanceMethods
+
         base.initialize_acts_as_holdable_core
       end
 
@@ -41,7 +43,7 @@ module ActsAsHoldable
             message << " unpermitted parameters: #{unpermitted_params.join(',')}." unless unpermitted_params.length.empty?
             message << " missing parameters: #{required_params.join(',')}." unless required_params.length.empty?
             message << " parameters type mismatch: #{wrong_types.join(',')}" unless wrong_types.length.empty?
-            raise ActsAsBookable::OptionsInvalid.new(self, message)
+            raise ActsAsHoldable::OptionsInvalid.new(self, message)
           end
           true
         end
@@ -51,6 +53,38 @@ module ActsAsHoldable
         def set_options
           defaults = nil
           # self.holding_opts.reverse_merge!(defaults)
+        end
+      end
+
+      module InstanceMethods
+        def check_availability!(opts)
+          if self.holding_opts[:on_hand_type] != :none
+            # Amount > on_hand
+            if opts[:amount] > self.on_hand
+              raise ActsAsHoldable::AvailabilityError.new ActsAsHoldable::T.er('.availability.amount_gt_on_hand', model: self.class.to_s)
+            end
+          end
+          true
+        end
+
+        def check_availability(opts)
+          begin
+            check_availability!(opts)
+          rescue ActsAsHoldable::AvailabilityError
+            false
+          end
+        end
+
+        def hold!(holder, opts)
+          holder.hold(self, opts)
+        end
+
+        def validate_holding_options!(opts)
+          self.validate_holding_options!(opts)
+        end
+
+        def holder?
+          self.class.holder?
         end
       end
     end

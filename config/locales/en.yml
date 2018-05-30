@@ -5,3 +5,6 @@ en:
         holding:
           must_be_holdable: "cannot hold a %{model} as it\'s not holdable"
           must_be_holder: "a %{model} cannot hold a resource, because %{model} is not a holder"
+        availability:
+          amount_gt_on_hand: "amount cannot be greater than %{model} on_hand"
+          already_held: "the %{model} is full"
