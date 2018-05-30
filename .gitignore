@@ -3,10 +3,13 @@
 /pkg/*
 .bundle
 .ruby-version
-spec/internal/config/database.yml
 tmp*.sw?
 *.sw?
 tmp
 *.gem
 *.lock
 coverage
+
+spec/internal/config/database.yml
+spec/internal/db/combustion_test.sqlite
+ 

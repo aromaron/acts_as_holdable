@@ -36,7 +36,7 @@ describe 'acts_as_holdable' do
 
   describe 'Reloading' do
     it 'should save a model instantiated by Model.find' do
-      holdable = Holdable.create!(name: 'Holdable', capacity: 1)
+      holdable = Holdable.create!(name: 'Holdable', on_hand: 1)
       found_holdable = Holdable.find(holdable.id)
       expect(found_holdable.save).to eq true
     end

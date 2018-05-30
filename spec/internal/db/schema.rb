@@ -6,7 +6,7 @@ ActiveRecord::Schema.define do
 
   create_table :holdables, force: true do |t|
     t.column :name, :string
-    t.column :capacity, :integer
+    t.column :on_hand, :integer
   end
 
   create_table :unholdables, force: true do |t|
@@ -25,9 +25,10 @@ ActiveRecord::Schema.define do
     t.column :name, :string
   end
 
-  create_table :holdings, force: true do |t|
+  create_table :acts_as_holdable_holdings, force: true do |t|
     t.column :name, :string
-    t.references :holdable, polymorphic: true
-    t.references :holder, polymorphic: true
+    t.references :holdable, polymorphic: true, index: { name: "index_acts_as_holdable_holdings_holdable" }
+    t.references :holder, polymorphic: true, index: { name: "index_acts_as_holdable_holdings_holder" }
+    t.column :amount, :integer
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActsAsHoldable
   module Holder
     def self.included(base)
@@ -5,7 +7,7 @@ module ActsAsHoldable
     end
 
     module ClassMethods
-      def acts_as_holder(opts={})
+      def acts_as_holder(_opts = {})
         class_eval do
           has_many :holdings, as: :holder, dependent: :destroy, class_name: '::ActsAsHoldable::Holding'
         end
@@ -20,19 +22,15 @@ module ActsAsHoldable
     end
 
     module InstanceMethods
+      def hold!(holdable, opts = {})
+        # validates availability
+        holdable.check_availability!(opts) if holdable.class.holdable?
 
-      def hold!(holdable)
-        holding = ActsAsHoldable::Holding.create!(holder: self, holdable: holdable)
+        holding_params = opts.merge(holder: self, holdable: holdable)
+        holding = ActsAsHoldable::Holding.create!(holding_params)
+
         holdable.reload
         holding
-      end
-
-      def hold(holdable)
-        begin
-          hold!(holdable)
-        rescue ActiveRecord::RecordInvalid => er
-          false
-        end
       end
 
       def holder?

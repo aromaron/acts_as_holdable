@@ -1,5 +1,7 @@
-# ActsAsBooked
-Short description and motivation.
+# ActsAsHoldable
+ActsAsHoldable allows resources to be held by users. It:
+
+* Is a MVC solution based on Rails engines
 
 ## Usage
 How to use my plugin.
@@ -21,8 +23,18 @@ Or install it yourself as:
 $ gem install acts_as_holdable
 ```
 
+## Migrations
+
+```bash
+bundle exec rake acts_as_holdable_engine:install:migrations
+```
+
 ## Contributing
 Contribution directions go here.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+### Acknowledgements
+
+To speed-up the initialization process of this project, the structure of this repository was strongly influenced by ActsAsBookable by Tandù srl.
