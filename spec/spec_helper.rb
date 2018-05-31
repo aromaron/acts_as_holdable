@@ -3,6 +3,8 @@ require 'coveralls'
 require 'combustion'
 require 'pry'
 
+Coveralls.wear!
+
 SimpleCov.formatter = Coveralls::SimpleCov::Formatter
 SimpleCov.start do
   add_filter 'app/secrets'
