@@ -1,0 +1,10 @@
+es-MX:
+  acts_as_holdable:
+    errors:
+      messages:
+        holding:
+          must_be_holdable: "No se puede apartar %{model} ya que no es apartable"
+          must_be_holder: "%{model} no puede apartar un recurso, porque %{model} no es un agente de apartados"
+        availability:
+          amount_gt_on_hand: "cantidad no puede ser mayor que la capacidad de %{model}"
+          already_held: "%{model} está totalmente apartado"
