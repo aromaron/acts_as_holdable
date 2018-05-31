@@ -5,7 +5,7 @@
 # ActsAsHoldable
 ActsAsHoldable allows resources to be held by users. It:
 
-* Is a MVC solution based on Rails engines
+* Is a solution based on Rails engines
 
 ## Installation
 Add this line to your application's Gemfile:
