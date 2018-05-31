@@ -25,7 +25,7 @@ module ActsAsHoldable
     end
 
     def on_hold_required?
-      holdable.holding_opts && holdable.holding_opts[:on_hold_track] != :false
+      holdable.holding_opts && holdable.holding_opts[:on_hold_track] != false
     end
 
     private
