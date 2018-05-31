@@ -69,7 +69,7 @@ describe 'Holding model' do
 
   describe 'dont update on_hold counter' do
     before(:each) do
-      Holdable.holding_opts[:on_hold_track] = :false
+      Holdable.holding_opts[:on_hold_track] = false
       Holdable.initialize_acts_as_holdable_core
     end
 
