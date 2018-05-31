@@ -17,6 +17,17 @@ module ActsAsHoldable
     validates :amount, presence: true, numericality: { only_integer: true,
                                                        greater_than_or_equal_to: 0 }
 
+    after_save :update_on_hold, if: :on_hold_required?
+
+    def update_on_hold
+      holdable.update(on_hold: holdable.holdings.sum(:amount)) if holdable.respond_to?(:on_hold)
+      holdable.reload
+    end
+
+    def on_hold_required?
+      holdable.holding_opts && holdable.holding_opts[:on_hold_track] != :false
+    end
+
     private
 
     # Validation method. Check if the holded model is actually holdable

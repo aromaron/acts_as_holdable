@@ -7,6 +7,7 @@ ActiveRecord::Schema.define do
   create_table :holdables, force: true do |t|
     t.column :name, :string
     t.column :on_hand, :integer
+    t.column :on_hold, :integer
   end
 
   create_table :unholdables, force: true do |t|

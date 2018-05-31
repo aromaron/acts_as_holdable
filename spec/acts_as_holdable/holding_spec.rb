@@ -58,4 +58,30 @@ describe 'Holding model' do
   it 'should belong to holdable' do
     expect(@holding.holdable.id).to eq @holdable.id
   end
+
+  describe 'update on_hold counters' do
+    it 'should to update holdables on_hand' do
+      holdable1 = Holdable.create!(name: 'Holdable', on_hand: 3)
+      @holder.hold!(holdable1, amount: 2)
+      expect(holdable1.on_hold).to eq 2
+    end
+  end
+
+  describe 'dont update on_hold counter' do
+    before(:each) do
+      Holdable.holding_opts[:on_hold_track] = :false
+      Holdable.initialize_acts_as_holdable_core
+    end
+
+    after(:all) do
+      Holdable.holding_opts = {}
+      Holdable.initialize_acts_as_holdable_core
+    end
+
+    it 'should not update holdables on_hand if on_hold_track is set to false' do
+      holdable2 = Holdable.create!(name: 'Holdable', on_hand: 3)
+      @holder.hold!(holdable2, amount: 2)
+      expect(holdable2.on_hold).to eq nil
+    end
+  end
 end

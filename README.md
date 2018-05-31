@@ -103,7 +103,7 @@ end
 
 > WARNING - **migration needed!** - with this option the model must have an attribute `on_hand: :integer`
 
-The model is holdable until its `capacity` is reached. (e.g. an event't tickets types)
+The model is holdable until its `capacity` is reached. (e.g. an event't tickets)
 
 **Configuration**
 
@@ -132,6 +132,12 @@ Each instance of the model must define its capacity.
 @user2.hold! @ticket, amount: 20 # holding tickets for other 20 people, OK
 @user3.hold! @ticket, amount: 10 # overholding! raise ActsAsHoldable::AvailabilityError
 ```
+
+#### Holdings Track - `on_hold_track: :true`
+
+Useful if you want an easier way to keep track of how many holdings you currently have. Every time a holding is created or deleted the `on_hold` counter gets uptaded on your model
+
+> WARNING - **migration needed!** - with this option the model must have an attribute `on_hold: :integer`
 
 ## Holding resources on a span of time
 
