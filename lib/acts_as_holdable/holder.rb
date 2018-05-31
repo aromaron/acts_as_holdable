@@ -37,6 +37,7 @@ module ActsAsHoldable
       def unhold!(holding)
         # deletes current holding
         ActsAsHoldable::Holding.destroy(holding.id)
+        holding.update_on_hold
         reload
         true
       end
