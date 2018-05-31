@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/aromaron/acts_as_holdable.svg?branch=master)](https://travis-ci.org/aromaron/acts_as_holdable)
+[![Maintainability](https://api.codeclimate.com/v1/badges/74d210e67822c530e218/maintainability)](https://codeclimate.com/github/aromaron/acts_as_holdable/maintainability)
+[![Coverage Status](https://coveralls.io/repos/github/aromaron/acts_as_holdable/badge.svg?branch=master)](https://coveralls.io/github/aromaron/acts_as_holdable?branch=master)
+
 # ActsAsHoldable
 ActsAsHoldable allows resources to be held by users. It:
 
