@@ -25,7 +25,7 @@ module ActsAsHoldable
     module InstanceMethods
       def hold!(holdable, opts = {})
         # validates availability
-        holdable.check_availability!(opts) if holdable.class.holdable?
+        holdable.check_availability!(holdable, opts) if holdable.class.holdable?
 
         holding_params = opts.merge(holder: self, holdable: holdable)
         holding = ActsAsHoldable::Holding.create!(holding_params)
@@ -36,9 +36,11 @@ module ActsAsHoldable
 
       def unhold!(holding)
         # deletes current holding
-        ActsAsHoldable::Holding.destroy(holding.id)
-        holding.update_on_hold
-        reload
+        holdable = holding.holdable
+        amount = holding.amount
+        return unless ActsAsHoldable::Holding.destroy(holding.id)
+        holdable.update(on_hold: holdable.on_hold - amount)
+        holdable.reload
         true
       end
 

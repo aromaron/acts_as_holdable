@@ -95,22 +95,20 @@ module ActsAsHoldable
       end
 
       module InstanceMethods
-        def check_availability!(opts)
+        def check_availability!(holdable, opts)
           # validates options
           validate_holding_options!(opts)
-
-          if holding_opts[:on_hand_type] != :none
-            # Amount > on_hand
-            if opts[:amount] > on_hand
-              raise ActsAsHoldable::AvailabilityError,
+          return true if holding_opts[:on_hand_type] != :none
+          holdings_amount = holdable.holdings ? holdable.holdings.sum(:amount) : 0
+          # Amount > on_hand
+          if opts[:amount] > (holdable.on_hand - holdings_amount)
+            raise ActsAsHoldable::AvailabilityError,
                     ActsAsHoldable::T.er('.availability.amount_gt_on_hand', model: self.class.to_s)
-            end
           end
-          true
         end
 
-        def check_availability(opts)
-          check_availability!(opts)
+        def check_availability(holdable, opts)
+          check_availability!(holdable,opts)
         rescue ActsAsHoldable::AvailabilityError
           false
         end

@@ -12,4 +12,5 @@ coverage
 
 spec/internal/config/database.yml
 spec/internal/db/combustion_test.sqlite
+spec/internal/log/test.log
  
