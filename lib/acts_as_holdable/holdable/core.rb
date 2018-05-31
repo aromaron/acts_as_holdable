@@ -61,6 +61,7 @@ module ActsAsHoldable
           # Validates options
           permitted_options = {
             on_hand_type: %i[open closed none],
+            on_hold_track: %i[true false],
             preset: [:ticket]
           }
 
@@ -77,11 +78,13 @@ module ActsAsHoldable
           defaults = case holding_opts[:preset]
                      when :ticket
                        {
-                         on_hand_type: :open
+                         on_hand_type: :open,
+                         on_hold_track: :true
                        }
                      else
                        {
-                         on_hand_type: :none
+                         on_hand_type: :none,
+                         on_hold_track: :false
                        }
                      end
 
