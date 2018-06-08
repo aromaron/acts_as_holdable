@@ -115,6 +115,10 @@ module ActsAsHoldable
           false
         end
 
+        def be_held!(holder, opts={})
+          holder.hold!(self, opts)
+        end
+
         def hold!(holder, opts)
           holder.hold(self, opts)
         end
